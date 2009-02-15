@@ -52,16 +52,63 @@ used (so that the existing behaviour of Mechanize doesn't break.)
 
 =cut
 
-use Moose::Role;
-use HTML::TreeBuilder;
+use MooseX::Role::Parameterized;
+use Moose::Util::TypeConstraints;
+#use HTML::TreeBuilder;
 
-our $VERSION = '1.00003';
+subtype 'WWW.Mechanize.TreeBuilder.TreeClass'
+  => as 'ClassType',
+  => where { Class::MOP::load_class($_) && $_->isa('HTML::TreeBuilder') };
+
+subtype 'WWW.Mechanize.TreeBuilder.ElementClass'
+  => as 'ClassType',
+  => where { Class::MOP::load_class($_) && $_->isa('HTML::Element') };
+
+our $VERSION = '1.00004';
+
+parameter tree_class => (
+  isa => 'WWW.Mechanize.TreeBuilder.TreeClass',
+  required => 1,
+  default => 'HTML::TreeBuilder',
+);
+
+parameter element_class => (
+  isa => 'WWW.Mechanize.TreeBuilder.ElementClass',
+  lazy => 1,
+  default => 'HTML::Element',
+  predicate => 'has_element_class'
+);
+
+# Used if element_class is not provided to give sane defaults
+our %ELEMENT_CLASS_MAPPING = (
+  'HTML::TreeBuilder' => 'HTML::Element',
+  # HTML::TreeBuilder::XPath does it wrong.
+  'HTML::TreeBuilder::XPath' => 'HTML::TreeBuilder::XPath::Node'
+);
+
+role {
+  my $p = shift;
+
+  my $tree_class = $p->tree_class;
+  my $ele_class;
+  unless ($p->has_element_class) {
+    $ele_class = $ELEMENT_CLASS_MAPPING{$tree_class};
+
+    if (!defined( $ele_class ) ) {
+      local $Carp::Internal{'MooseX::Role::Parameterized::Meta::Role::Parameterizable'} = 1;
+      Carp::carp "WWW::Mechanize::TreeBuilder element_class not specified for overridden tree_class of $tree_class";
+      $ele_class = "HTML::Element";
+    }
+
+  } else {
+    $ele_class = $p->element_class;
+  }
 
 requires '_make_request';
 
 has 'tree' => ( 
   is        => 'ro', 
-  isa       => 'HTML::Element',
+  isa       => $ele_class,
   writer    => '_set_tree',
   predicate => 'has_tree',
   clearer   => 'clear_tree',
@@ -72,15 +119,16 @@ has 'tree' => (
   # take all subs from the symbol table that dont start with a _
   handles => sub {
     my ($attr, $delegate_class) = @_;
+    #$delegate_class = Moose::Meta::Class->initialize($p->tree_class);
 
     $DB::single = 1;
     my %methods = map { $_->name => 1 
-      } $attr->associated_class->get_all_methods,
-        $attr->associated_class->get_all_attributes;
+      } $attr->associated_class->get_all_methods;
 
     return 
       map  { $_->name => $_->name }
-      grep { my $n = $_->name; $n !~ /^_/ && !$methods{$n} } $delegate_class->get_all_methods; 
+      grep { my $n = $_->name; $n !~ /^_/ && !$methods{$n} } 
+        $delegate_class->get_all_methods;
   }
 );
 
@@ -96,7 +144,7 @@ around '_make_request' => sub {
   }
 
   if ($ret->content_type =~ m[^(text/html|application/(?:.*?\+)xml)]) {
-    $self->_set_tree( HTML::TreeBuilder->new_from_content($ret->decoded_content)->elementify );
+    $self->_set_tree( $tree_class->new_from_content($ret->decoded_content)->elementify );
   } 
   
   return $ret;
@@ -106,6 +154,10 @@ sub DEMOLISH {
   my $self = shift;
   $self->tree->delete if $self->has_tree;
 }
+
+};
+
+no MooseX::Role::Parameterized;
 
 =head1 AUTHOR
 

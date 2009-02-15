@@ -13,7 +13,7 @@ BEGIN {
 
 my $mech = MockMechanize->new;
 
-WWW::Mechanize::TreeBuilder->meta->apply($mech);
+WWW::Mechanize::TreeBuilder->meta->apply( $mech );
 
 # Check that the clone come from WWW::Mech, not HTML::TreeBuilder
 my @meths = $mech->meta->find_all_methods_by_name('clone');
@@ -30,7 +30,6 @@ $mech->get_ok('/', 'Request ok');
 $mech->content_contains('A para');
 
 ok($mech->has_tree, 'We have a HTML tree');
-
 
 
 isa_ok($mech->tree, 'HTML::Element');
