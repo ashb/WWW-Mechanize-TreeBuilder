@@ -34,22 +34,21 @@ Instead, do it like the following:
 
  ok($mech->look_down(_tag => 'p', sub { $_[0]->as_trimmed_text eq 'some text' })
 
-The anon-sub there is a bit icky, but this means that if the p tag should 
-happen to add attributes to the C<< <p> >> tag (such as an id or a class) it
-will still work and find the right tag.
+The anon-sub there is a bit icky, but this means that anyone should happen to
+add attributes to the C<< <p> >> tag (such as an id or a class) it will still
+work and find the right tag.
 
 All of the methods avaiable on L<HTML::Element> (that aren't 'private' - i.e. 
-everything that doesn't begin with an underscore) such as C<look_down> or 
-C<find> are automatically delegated to C<< $mech->tree >> through the magic of
-Moose.
+that don't begin with an underscore) such as C<look_down> or C<find> are
+automatically delegated to C<< $mech->tree >> through the magic of Moose.
 
 =head1 METHODS
 
 Everything in L<WWW::Mechanize> (or which ever sub class you apply it to) and
-all public methods from L<HTML::Element> except those which WWW::Mechanize
-and HTML::Element give this method. In the case where WWW::Mechanize and 
-HTML::TreeBuilder boht define a method, the one from WWW::Mechanize will be 
-used (so that the behaviour of Mechanize wont get broken.)
+all public methods from L<HTML::Element> except those where WWW::Mechanize
+and HTML::Element overlap. In the case where WWW::Mechanize and
+HTML::TreeBuilder both define a method, the one from WWW::Mechanize will be
+used (so that the existing behaviour of Mechanize doesn't break.)
 
 =cut
 
