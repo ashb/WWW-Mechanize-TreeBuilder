@@ -1,0 +1,20 @@
+Changelog for WWW::Mechanize::TreeBuilder
+
+1.00004 - 2009 Feb 14
+  - Fix delegation with latest Mooses (something seems to have changed along
+    the way) and add tests to it
+  - Bump Moose dep to 0.69 to be on the safe side
+
+1.00003 - 2008 Jan 14
+  - Fix delegation of 'clone' and other methods that already exist on Mechanize
+
+1.00002 - 2007 Sep 6
+  - Fix Makefile.PL so that HTML::TreeBuilder is a dependancy, not just 
+    recomended - oops.
+
+1.00001 - 2007 Sep 5
+  - I can't count - fix test count.
+
+1.00000 - 2007 Sep 4
+  - Initial Release
+
