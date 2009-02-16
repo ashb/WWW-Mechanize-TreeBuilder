@@ -50,6 +50,32 @@ and HTML::Element overlap. In the case where WWW::Mechanize and
 HTML::TreeBuilder both define a method, the one from WWW::Mechanize will be
 used (so that the existing behaviour of Mechanize doesn't break.)
 
+=head1 USING XPATH OR OTHER SUBCLASSES
+
+L<HTML::TreeBuilder::XPath> allows you to use use xpath selectors to select
+elements in the tree. You can use that module by providing parameters to the
+moose role:
+
+ with 'WWW::Mechanize::TreeBuilder' => {
+   tree_class => 'HTML::TreeBuilder::XPath'
+ };
+
+ # or
+ 
+ WWW::Mechanize::TreeBuilder->meta->apply($mech, {
+   tree_class => 'HTML::TreeBuilder::XPath';
+ } );
+
+and class will be automatically loaded for you. This class will be used to
+construct the tree in the following manner:
+
+ $tree = $tree_class->new_from_content($req->decoded_content)->elementify;
+
+You can also specify a C<element_class> parameter which is the (HTML::Element
+sub)class that methods are proxied from. This module provides defaults for
+element_class when C<tree_class> is "HTML::TreeBuilder" or
+"HTML::TreeBuilder::XPath" - it will warn otherwise.
+
 =cut
 
 use MooseX::Role::Parameterized;
@@ -112,7 +138,6 @@ has 'tree' => (
   writer    => '_set_tree',
   predicate => 'has_tree',
   clearer   => 'clear_tree',
-  default   => undef,
 
   # Since HTML::Element isn't a moose object, i have to 'list' everything I 
   # want it to handle myself here. how annoying. But since I'm lazy, I'll just
