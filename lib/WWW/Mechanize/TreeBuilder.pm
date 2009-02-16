@@ -82,13 +82,20 @@ use MooseX::Role::Parameterized;
 use Moose::Util::TypeConstraints;
 #use HTML::TreeBuilder;
 
+subtype 'WWW.Mechanize.TreeBuilder.LoadClass'
+  => as 'Str'
+  => where { Class::MOP::load_class($_) }
+  => message { "Cannot load class $_" };
+
 subtype 'WWW.Mechanize.TreeBuilder.TreeClass'
-  => as 'ClassType',
-  => where { Class::MOP::load_class($_) && $_->isa('HTML::TreeBuilder') };
+  => as 'WWW.Mechanize.TreeBuilder.LoadClass'
+  => where { $_->isa('HTML::TreeBuilder') }
+  => message { "$_ isn't a subclass of HTML::TreeBuilder (or it can't be loaded)" };
 
 subtype 'WWW.Mechanize.TreeBuilder.ElementClass'
-  => as 'ClassType',
-  => where { Class::MOP::load_class($_) && $_->isa('HTML::Element') };
+  => as 'WWW.Mechanize.TreeBuilder.LoadClass',
+  => where { $_->isa('HTML::Element') }
+  => message { "$_ isn't a subclass of HTML::Element (or it can't be loaded)" };
 
 our $VERSION = '1.00004';
 
@@ -108,8 +115,10 @@ parameter element_class => (
 # Used if element_class is not provided to give sane defaults
 our %ELEMENT_CLASS_MAPPING = (
   'HTML::TreeBuilder' => 'HTML::Element',
+
   # HTML::TreeBuilder::XPath does it wrong.
-  'HTML::TreeBuilder::XPath' => 'HTML::TreeBuilder::XPath::Node'
+  #'HTML::TreeBuilder::XPath' => 'HTML::TreeBuilder::XPath::Node'
+  'HTML::TreeBuilder::XPath' => 'HTML::Element'
 );
 
 role {
