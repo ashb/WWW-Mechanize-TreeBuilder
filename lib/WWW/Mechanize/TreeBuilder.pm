@@ -45,10 +45,10 @@ automatically delegated to C<< $mech->tree >> through the magic of Moose.
 =head1 METHODS
 
 Everything in L<WWW::Mechanize> (or which ever sub class you apply it to) and
-all public methods from L<HTML::Element> except those where WWW::Mechanize
-and HTML::Element overlap. In the case where WWW::Mechanize and
-HTML::TreeBuilder both define a method, the one from WWW::Mechanize will be
-used (so that the existing behaviour of Mechanize doesn't break.)
+all public methods from L<HTML::Element> except those where WWW::Mechanize and
+HTML::Element overlap. In the case where the two classes both define a method,
+the one from WWW::Mechanize will be used (so that the existing behaviour of
+Mechanize doesn't break.)
 
 =head1 USING XPATH OR OTHER SUBCLASSES
 
@@ -97,7 +97,7 @@ subtype 'WWW.Mechanize.TreeBuilder.ElementClass'
   => where { $_->isa('HTML::Element') }
   => message { "$_ isn't a subclass of HTML::Element (or it can't be loaded)" };
 
-our $VERSION = '1.00004';
+our $VERSION = '1.10000';
 
 parameter tree_class => (
   isa => 'WWW.Mechanize.TreeBuilder.TreeClass',
@@ -153,9 +153,7 @@ has 'tree' => (
   # take all subs from the symbol table that dont start with a _
   handles => sub {
     my ($attr, $delegate_class) = @_;
-    #$delegate_class = Moose::Meta::Class->initialize($p->tree_class);
 
-    $DB::single = 1;
     my %methods = map { $_->name => 1 
       } $attr->associated_class->get_all_methods;
 
@@ -191,6 +189,7 @@ sub DEMOLISH {
 
 };
 
+no Moose::Util::TypeConstraints;
 no MooseX::Role::Parameterized;
 
 =head1 AUTHOR

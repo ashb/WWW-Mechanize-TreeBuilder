@@ -3,3 +3,6 @@ META.yml
 /blib/
 /inc/
 /pm_to_blib
+MANIFEST
+.*.sw[po]
+/WWW-Mechanize-TreeBuilder-*.tar.gz
