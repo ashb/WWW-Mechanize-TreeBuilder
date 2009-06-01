@@ -8,19 +8,20 @@ WWW::Mechanize::TreeBuilder
 
  use Test::More tests => 2;
  use Test::WWW::Mechanize;
+ use WWW::Mechanize::TreeBuilder;
  # or 
  # use WWW::Mechanize;
  # or 
  # use Test::WWW::Mechanize::Catalyst 'MyApp';
 
- my $mech = WWW::Mechanize->new;
+ my $mech = Test::WWW::Mechanize->new;
  # or
  #my $mech = Test::WWW::Mechanize::Catalyst->new;
  # etc. etc.
  WWW::Mechanize::TreeBuilder->meta->apply($mech);
 
  $mech->get_ok('/');
- ok( $mech->look_down(_tag => 'p')->as_trimmed_text, 'Some text', 'It worked' );
+ ok( $mech->look_down(_tag => 'p')->as_trimmed_text eq 'Some text', 'It worked' );
 
 =head1 DESCRIPTION
 
