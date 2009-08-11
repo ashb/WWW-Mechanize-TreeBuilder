@@ -21,11 +21,11 @@ WWW::Mechanize::TreeBuilder
  WWW::Mechanize::TreeBuilder->meta->apply($mech);
 
  $mech->get_ok('/');
- ok( $mech->look_down(_tag => 'p')->as_trimmed_text eq 'Some text', 'It worked' );
+ is( $mech->look_down(_tag => 'p')->as_trimmed_text, 'Some text', 'It worked' );
 
 =head1 DESCRIPTION
 
-This module combines WWW::Mechanize and HTML::TreeBuilder. Why? Because I've 
+This module combines L<WWW::Mechanize> and L<HTML::TreeBuilder>. Why? Because I've 
 seen too much code like the following:
 
  like($mech->content, qr{<p>some text</p>}, "Found the right tag");
