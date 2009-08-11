@@ -1,5 +1,9 @@
 Changelog for WWW::Mechanize::TreeBuilder
 
+1.10001 - 2009 Aug 11
+  - Pod fixes from leto and dandv
+  - Link to repo in META.yml
+
 1.10000 - 2009 Feb 17
   - Fix delegation with latest Mooses (something seems to have changed along
     the way) and add tests to it
