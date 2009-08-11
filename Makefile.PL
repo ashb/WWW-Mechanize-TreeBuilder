@@ -5,6 +5,8 @@ name            'WWW-Mechanize-TreeBuilder';
 all_from        'lib/WWW/Mechanize/TreeBuilder.pm';
 license         'perl';
 
+resources repository => 'http://github.com/ashb/WWW-Mechanize-TreeBuilder';
+
 requires        'Moose'                          => '0.65';
 requires        'HTML::TreeBuilder';
 requires        'Scalar::Util';
