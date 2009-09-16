@@ -63,9 +63,10 @@ moose role:
 
  # or
  
- WWW::Mechanize::TreeBuilder->meta->apply($mech, {
+ # NOTE: No hashref using this method
+ WWW::Mechanize::TreeBuilder->meta->apply($mech,
    tree_class => 'HTML::TreeBuilder::XPath';
- } );
+ );
 
 and class will be automatically loaded for you. This class will be used to
 construct the tree in the following manner:
