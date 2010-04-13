@@ -1,5 +1,8 @@
 Changelog for WWW::Mechanize::TreeBuilder
 
+1.10002 - 2010 Apr 13
+  - Update example to work properly
+
 1.10001 - 2009 Aug 11
   - Pod fixes from leto and dandv
   - Link to repo in META.yml
