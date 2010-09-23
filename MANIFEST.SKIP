@@ -5,6 +5,8 @@
 \B\.svn\b
 \B\.git
 
+.tar.gz$
+
 # Avoid Makemaker generated and utility files.
 \bMakefile$
 \bblib

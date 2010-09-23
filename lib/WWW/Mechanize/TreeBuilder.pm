@@ -99,7 +99,7 @@ subtype 'WWW.Mechanize.TreeBuilder.ElementClass'
   => where { $_->isa('HTML::Element') }
   => message { "$_ isn't a subclass of HTML::Element (or it can't be loaded)" };
 
-our $VERSION = '1.10002';
+our $VERSION = '1.10003';
 
 parameter tree_class => (
   isa => 'WWW.Mechanize.TreeBuilder.TreeClass',

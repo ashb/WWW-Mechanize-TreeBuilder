@@ -1,5 +1,6 @@
 Changelog for WWW::Mechanize::TreeBuilder
 
+1.10003 - 2010 Sep 23
   - Fix for rt: 57723: Tests failing on Test-Simple 0.96 ( Kent Fredric )
 
 1.10002 - 2010 Apr 13
