@@ -19,7 +19,7 @@ use_ok 'MockMechanize';
 my $mech = MockMechanize->new;
 
 WWW::Mechanize::TreeBuilder->meta->apply(
-  $mech, 
+  $mech,
   tree_class => 'HTML::TreeBuilder::XPath'
 );
 
@@ -29,4 +29,4 @@ $mech->get_ok('/', 'Request ok');
 # Check we can use normal TWMC methods
 $mech->content_contains('A para');
 
-is( $mech->find_xpath('//h1'), 'It works', 'find_xpath works');
+is( $mech->find_xpath('//h1')->string_value, 'It works', 'find_xpath works');
