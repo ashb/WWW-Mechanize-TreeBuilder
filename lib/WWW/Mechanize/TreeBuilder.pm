@@ -39,7 +39,7 @@ The anon-sub there is a bit icky, but this means that anyone should happen to
 add attributes to the C<< <p> >> tag (such as an id or a class) it will still
 work and find the right tag.
 
-All of the methods avaiable on L<HTML::Element> (that aren't 'private' - i.e. 
+All of the methods available on L<HTML::Element> (that aren't 'private' - i.e. 
 that don't begin with an underscore) such as C<look_down> or C<find> are
 automatically delegated to C<< $mech->tree >> through the magic of Moose.
 
@@ -53,7 +53,7 @@ Mechanize doesn't break.)
 
 =head1 USING XPATH OR OTHER SUBCLASSES
 
-L<HTML::TreeBuilder::XPath> allows you to use use xpath selectors to select
+L<HTML::TreeBuilder::XPath> allows you to use xpath selectors to select
 elements in the tree. You can use that module by providing parameters to the
 moose role:
 
@@ -152,7 +152,7 @@ has 'tree' => (
 
   # Since HTML::Element isn't a moose object, i have to 'list' everything I 
   # want it to handle myself here. how annoying. But since I'm lazy, I'll just
-  # take all subs from the symbol table that dont start with a _
+  # take all subs from the symbol table that don't start with a _
   handles => sub {
     my ($attr, $delegate_class) = @_;
 
