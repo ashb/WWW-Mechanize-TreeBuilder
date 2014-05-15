@@ -13,7 +13,7 @@ requires        'Scalar::Util';
 requires        'MooseX::Role::Parameterized';
 
 build_requires  'Test::More';
-build:requires  'Test::WWW::Mechanize';
+build_requires  'Test::WWW::Mechanize';
 
 no_index        directory => 't/lib';
 
