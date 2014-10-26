@@ -185,10 +185,12 @@ around '_make_request' => sub {
   return $ret;
 };
 
-sub DEMOLISH {
+sub DESTROY {}
+
+after DESTROY => sub {
   my $self = shift;
-  $self->tree->delete if $self->has_tree;
-}
+  $self->tree->delete if ($self->has_tree && $self->tree);
+};
 
 };
 
