@@ -13,7 +13,7 @@ $WWW::Mechanize::TreeBuilder::ELEMENT_CLASS_MAPPING{"@{[__PACKAGE__]}"} = 'MockT
 
 package #
   MockTreeBuilderEle;
-
+$INC{'MockTreeBuilderEle.pm'}=1; # help stricter Moose checking
 use base 'HTML::Element';
 
 sub some_other_method { "I exist in " . Scalar::Util::blessed($_[0]) };

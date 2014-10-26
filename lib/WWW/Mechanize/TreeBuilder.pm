@@ -82,11 +82,12 @@ element_class when C<tree_class> is "HTML::TreeBuilder" or
 
 use MooseX::Role::Parameterized;
 use Moose::Util::TypeConstraints;
+use Class::Load 'load_class';
 #use HTML::TreeBuilder;
 
 subtype 'WWW.Mechanize.TreeBuilder.LoadClass'
   => as 'Str'
-  => where { Class::MOP::load_class($_) }
+  => where { load_class($_) }
   => message { "Cannot load class $_" };
 
 subtype 'WWW.Mechanize.TreeBuilder.TreeClass'
