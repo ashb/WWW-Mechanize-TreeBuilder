@@ -1,10 +1,12 @@
 Changelog for WWW::Mechanize::TreeBuilder
 
+1.20000 - 2010 Sep 23
   - Fix for global destruction where $self->tree has already been deleted
   - Fix for composing onto classes which already have a DEMOLISH method
     by providing a method modifier, rather than the DEMOLISH sub itself.
   - Fix being composed onto non-Moose classes by wrapping the DESTORY
     method rather than the DEMOLISH method.
+  - Fix bug around delegation of "import" method with custom element class
 
 1.10003 - 2010 Sep 23
   - Fix for rt: 57723: Tests failing on Test-Simple 0.96 ( Kent Fredric )

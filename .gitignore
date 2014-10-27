@@ -8,3 +8,4 @@ META.yml
 MANIFEST
 .*.sw[po]
 /WWW-Mechanize-TreeBuilder-*.tar.gz
+/WWW-Mechanize-TreeBuilder-*/
