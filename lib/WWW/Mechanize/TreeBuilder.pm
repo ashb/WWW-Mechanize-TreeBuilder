@@ -2,7 +2,7 @@ package WWW::Mechanize::TreeBuilder;
 
 =head1 NAME
 
-WWW::Mechanize::TreeBuilder
+WWW::Mechanize::TreeBuilder - combine WWW::Mechanize and HTML::TreeBuilder in nice ways
 
 =head1 SYNOPSIS
 
