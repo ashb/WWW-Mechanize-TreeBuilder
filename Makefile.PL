@@ -7,7 +7,7 @@ license         'perl';
 
 resources repository => 'http://github.com/ashb/WWW-Mechanize-TreeBuilder';
 
-requires        'Moose'                          => '0.65';
+requires        'Moose'                          => '2.1200';
 requires        'HTML::TreeBuilder';
 requires        'Scalar::Util';
 requires        'MooseX::Role::Parameterized';
