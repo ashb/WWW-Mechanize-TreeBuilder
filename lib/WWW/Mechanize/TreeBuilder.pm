@@ -160,6 +160,9 @@ has 'tree' => (
     my %methods = map { $_->name => 1 
       } $attr->associated_class->get_all_methods;
 
+    # Never delegate the 'import' method
+    $methods{import} = 1;
+
     return 
       map  { $_->name => $_->name }
       grep { my $n = $_->name; $n !~ /^_/ && !$methods{$n} } 
